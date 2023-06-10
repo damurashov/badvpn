@@ -62,12 +62,6 @@ if (BUILD_NCD AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Linux"))
     message(FATAL_ERROR "NCD is only available on Linux")
 endif ()
 
-if (BUILD_CLIENT OR BUILD_SERVER)
-    find_package(OpenSSL REQUIRED)
-    set(LIBCRYPTO_INCLUDE_DIRS "${OpenSSL_INCLUDE_DIRS}")
-    set(LIBCRYPTO_LIBRARY_DIRS "${OpenSSL_LIBRARY_DIRS}")
-    set(LIBCRYPTO_LIBRARIES "${OpenSSL_LIBRARIES}")
-endif ()
 
 if (BUILD_SERVER OR BUILD_CLIENT OR BUILD_FLOODER)
     find_package(NSPR REQUIRED)
@@ -138,7 +132,7 @@ else ()
         add_definitions(-Werror=implicit-function-declaration -Wno-switch-enum -Wno-unused-function
                         -Wstrict-aliasing)
     endif ()
-    
+
     if (CMAKE_C_COMPILER_ID MATCHES "^Clang")
         add_definitions(-Wno-initializer-overrides -Wno-tautological-constant-out-of-range-compare)
     endif ()
@@ -400,13 +394,13 @@ foreach (name ${BUILD_COMPONENTS})
     #    endif ()
     #    set(name_withspaces "${name_withspaces} ")
     #endwhile ()
-    
+
     # determine if we're building
     if (BUILD_${name})
         set(building "yes")
     else ()
         set(building "no")
     endif ()
-    
+
     message(STATUS "    ${name_withspaces} ${building}")
 endforeach ()
